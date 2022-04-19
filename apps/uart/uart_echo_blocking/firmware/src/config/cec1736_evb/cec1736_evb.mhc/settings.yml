@@ -1,0 +1,14 @@
+format_version: v1.0
+configName: cec1736_evb
+folderName: usart_echo_blocking
+frameworkPath: C:\h3
+processor: CEC1736_S0_2ZW
+projectName: usart_echo_blocking
+settings:
+  PackageFilter: ''
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: dev_packs\arm\CMSIS\5.8.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: dev_packs\Microchip\CEC_DFP\1.5.139\cec1736\atdf\CEC1736_S0_2ZW.atdf
