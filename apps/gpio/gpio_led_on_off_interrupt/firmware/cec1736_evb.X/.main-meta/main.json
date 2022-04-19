@@ -1,0 +1,81 @@
+{
+	"metaDataVersion": "1.0.0",
+	"category": "com.microchip.ide.project",
+	"content": {
+		"metaDataVersion": "1.1.0",
+		"name": "com.microchip.mcu32.mplabx.project.csp_apps_cec173x_gpio_led_on_off_interrupt",
+		"version": "3.2.0",
+		"displayName": "GPIO interrupt Example for CEC173x Family",
+		"projectName": "gpio_led_on_off_interrupt_cec1736_evb",
+		"shortDescription": "This example application demonstrate how to generate GPIO interrupt on a pin that is configured to generate an interrupt on either (rising or falling) edge, and indicate the pin status using the LED.",
+		"ide": {
+			"name": "MPLABX",
+			"semverRange": ">=6.00.0"
+		},
+		"compiler": [
+			{
+				"name": "XC32",
+				"semverRange": ">=4.0.0"
+			}
+		],
+		"dfp": {
+			"name": "CEC_DFP",
+			"semverRange": "^1.5.142"
+		},
+		"configurator": {
+			"name": "MCC",
+			"semverRange": ">=5.1.1"
+		},
+		"device": {
+			"metaDataVersion": "1.0.0",
+			"category": "com.microchip.portal.contentRef",
+			"content": {
+				"metaDataVersion": "1.0.0",
+				"category": "com.microchip.device",
+				"name": "CEC1736_S0_2ZW",
+				"versionRange": "*"
+			}
+		},
+		"author": "Microchip",
+		"subcategories": [
+			[
+				"Development Kit",
+				"CEC 173x Evaluation Board"
+			],
+			[
+				"Harmony",
+				"Peripherals",
+				"GPIO"
+			],
+			[
+				"Peripherals",
+				"GPIO"
+			]
+		],
+		"peripherals": [
+			"GPIO"
+		],
+		"keywords": [
+			"MHC",
+			"Harmony",
+			"CEC1736_S0_2ZW",
+			"CEC173x Family",
+			"GPIO",
+			"PORT",
+			"PIO",
+			"I/O",
+			"Pin"
+		],
+		"additionalData": {
+			"longDescription": {
+				"metaDataVersion": "1.0.0",
+				"category": "com.microchip.portal.fileRef",
+				"content": {
+					"metaDataVersion": "1.0.0",
+					"fileName": "./../../readme.md",
+					"mimeType": "text/markdown"
+				}
+			}
+		}
+	}
+}
