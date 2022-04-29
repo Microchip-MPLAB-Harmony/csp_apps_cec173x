@@ -26,7 +26,7 @@ To build the application, refer to the following table and open the project usin
 
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
-| cec1736_evb.X | MPLABX project for [CEC 1736 Evaluation Board](https://www.microchip.com/DevelopmentTools/ProductDetails/)     |
+| cec1736_evb.X | MPLABX project for CEC 1736 Evaluation Board     |
 |||
 
 ## Setting up the hardware
@@ -35,10 +35,10 @@ The following table shows the target hardware for the application projects.
 
 | Project Name| Board|
 |:---------|:---------:|
-| cec1736_evb.X | MPLABX project for [CEC 1736 Evaluation Board](https://www.microchip.com/DevelopmentTools/ProductDetails/)     |
+| cec1736_evb.X | MPLABX project for CEC 1736 Evaluation Board     |
 |||
 
-### Setting up [CEC 1736 Evaluation Board](https://www.microchip.com/DevelopmentTools/ProductDetails/)
+### Setting up CEC 1736 Evaluation Board
 
 - Connect the USB port P2 on the board to the computer using a micro USB cable
 - Connect the GPIO030 (output pin, on J11 connector, pin 1) to GPIO132 (input pin, on J11 connector, pin 3)
@@ -53,5 +53,5 @@ The following table provides the switch and the LED name:
 
 | Board | LED name |
 | ----- | -------- |
-|[CEC 1736 Evaluation Board](https://www.microchip.com/DevelopmentTools/ProductDetails/) | LED5 |
+|CEC 1736 Evaluation Board | LED5 |
 |||

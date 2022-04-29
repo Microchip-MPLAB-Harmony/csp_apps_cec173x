@@ -16,7 +16,7 @@ Following table provides number of peripheral library examples available for dif
 
 | Development Kits  | MPLAB X applications |
 |:-----------------:|:-------------------:|
-| [CEC 173x Evaluation Board](https://www.microchip.com/DevelopmentTools/ProductDetails/)  | 3 |
+| CEC 173x Evaluation Board  | 3 |
 
 ### New Features
 
