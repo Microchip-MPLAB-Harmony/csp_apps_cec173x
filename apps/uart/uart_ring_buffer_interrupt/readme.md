@@ -26,7 +26,7 @@ To build the application, refer to the following table and open the project usin
 
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
-| cec1736_evb.X | MPLABX project for CEC 1736 Evaluation Board    |
+| cec1736_evb.X | MPLABX project for [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A)    |
 |||
 
 ## Setting up the hardware
@@ -35,10 +35,10 @@ The following table shows the target hardware for the application projects.
 
 | Project Name| Board|
 |:---------|:---------:|
-| cec1736_evb.X | MPLABX project for CEC 1736 Evaluation Board     |
+| cec1736_evb.X | MPLABX project for [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A)     |
 |||
 
-### Setting up CEC 1736 Evaluation Board
+### Setting up [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A)
 
 - Connect the USB port P2 on the board to the computer using a micro USB cable
 
