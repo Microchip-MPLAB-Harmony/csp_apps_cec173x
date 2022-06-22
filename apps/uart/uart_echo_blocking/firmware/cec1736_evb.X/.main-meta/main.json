@@ -10,12 +10,12 @@
 		"shortDescription": "This example application demonstrates how to use the UART peripheral to transfer a block of data in a blocking manner.",
 		"ide": {
 			"name": "MPLABX",
-			"semverRange": ">=6.00.0"
+			"semverRange": ">=6.0.0"
 		},
 		"compiler": [
 			{
 				"name": "XC32",
-				"semverRange": ">=4.0.0"
+				"semverRange": ">=4.1.0"
 			}
 		],
 		"dfp": {
@@ -62,7 +62,7 @@
 			"CEC173x Family",
 			"UART",
 			"Serial Communication",
-			"UART",
+			"UART"
 		],
 		"additionalData": {
 			"longDescription": {

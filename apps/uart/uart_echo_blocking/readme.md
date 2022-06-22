@@ -9,7 +9,7 @@ has_toc: false
 
 # UART echo blocking
 
-This example application demonstrates how to use the UART peripheral to transfer block of data in a blocking manner.
+This example application demonstrates how to use the UART peripheral to transfer a block of data in a blocking manner.
 
 ## Description
 
@@ -27,7 +27,6 @@ To build the application, refer to the following table and open the project usin
 | Project Name      | Description                                    |
 | ----------------- | ---------------------------------------------- |
 | cec1736_evb.X | MPLABX project for [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A)     |
-|||
 
 ## Setting up the hardware
 
@@ -36,7 +35,6 @@ The following table shows the target hardware for the application projects.
 | Project Name| Board|
 |:---------|:---------:|
 | cec1736_evb.X | MPLABX project for [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A)   |
-|||
 
 ### Setting up [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A)
 
@@ -63,4 +61,3 @@ The following table shows the target hardware for the application projects.
 | Board      | LED Name                                    |
 | ----------------- | ---------------------------------------------- |
 | [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A) |LED5 |
-|||
