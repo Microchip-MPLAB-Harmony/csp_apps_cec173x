@@ -1,0 +1,78 @@
+{
+	"metaDataVersion": "1.0.0",
+	"category": "com.microchip.ide.project",
+	"content": {
+		"metaDataVersion": "1.1.0",
+		"name": "com.microchip.mcu32.mplabx.project.csp_apps_cec173x_qmspi_read_write",
+		"version": "3.2.0",
+		"displayName": "QMSPI flash read write Example for CEC173x Family",
+		"projectName": "qmspi_read_write_cec1736_evb",
+		"shortDescription": "This example shows how to use the QMSPI Peripheral library to perform erase, write and read operation with the QMSPI Serial Flash memory in Quad IO mode.",
+		"ide": {
+			"name": "MPLABX",
+			"semverRange": ">=6.0.0"
+		},
+		"compiler": [
+			{
+				"name": "XC32",
+				"semverRange": ">=4.1.0"
+			}
+		],
+		"dfp": {
+			"name": "CEC_DFP",
+			"semverRange": "^1.5.142"
+		},
+		"configurator": {
+			"name": "MCC",
+			"semverRange": ">=5.1.1"
+		},
+		"device": {
+			"metaDataVersion": "1.0.0",
+			"category": "com.microchip.portal.contentRef",
+			"content": {
+				"metaDataVersion": "1.0.0",
+				"category": "com.microchip.device",
+				"name": "CEC1736_S0_2ZW",
+				"versionRange": "*"
+			}
+		},
+		"author": "Microchip",
+		"subcategories": [
+			[
+				"Development Kit",
+				"CEC 173x Evaluation Board"
+			],
+			[
+				"Harmony",
+				"Peripherals",
+				"QMSPI"
+			],
+			[
+				"Peripherals",
+				"QMSPI"
+			]
+		],
+		"peripherals": [
+			"QMSPI"
+		],
+		"keywords": [
+			"MHC",
+			"Harmony",
+			"CEC1736_S0_2ZW",
+			"CEC173x Family",
+			"QMSPI",
+			"QSPI"
+		],
+		"additionalData": {
+			"longDescription": {
+				"metaDataVersion": "1.0.0",
+				"category": "com.microchip.portal.fileRef",
+				"content": {
+					"metaDataVersion": "1.0.0",
+					"fileName": "./../../readme.md",
+					"mimeType": "text/markdown"
+				}
+			}
+		}
+	}
+}
