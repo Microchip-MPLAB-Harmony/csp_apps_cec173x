@@ -1,5 +1,12 @@
 <config configName="cec1736_evb" projectName="usart_echo_blocking_cec1736_evb" configVersion="1.1" device="CEC1736_S0_2ZW" deviceLibraryClass="com.microchip.mcc.harmony.Harmony3Library" coreVersion="5.4.3">
-   <usedPackages class="java.util.ArrayList"/>
+   <usedPackages class="java.util.ArrayList">
+      <package packageName="csp" version="unknown" contentType="HARMONY">
+         <modules class="java.util.ArrayList"/>
+      </package>
+      <package packageName="dev_packs" version="unknown" contentType="HARMONY">
+         <modules class="java.util.ArrayList"/>
+      </package>
+   </usedPackages>
    <usedClasses class="java.util.TreeMap">
       <entry>
          <string>cmsis</string>
@@ -19,7 +26,7 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.harmony.Harmony3Library" version="1.1.1"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.harmony.Harmony3Library" version="1.1.2-a"/>
    </usedLibraries>
    <tokenMap class="java.util.TreeMap">
       <entry>
@@ -30,8 +37,7 @@
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="core" name="!@#harmonyUserData"/>
          <value>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;UserData&gt;
   &lt;UserData dnOrder=&quot;0&quot;&gt;
-    &lt;GraphSettings canvasHeight=&quot;90&quot; canvasWidth=&quot;617&quot; dnOrder=&quot;0&quot;/&gt;
-    &lt;ComponentGraph dnOrder=&quot;1&quot; id=&quot;__ROOTVIEW&quot;&gt;
+    &lt;ComponentGraph dnOrder=&quot;0&quot; id=&quot;__ROOTVIEW&quot;&gt;
       &lt;ElementPositions dnOrder=&quot;0&quot;&gt;
         &lt;ElementPosition dnOrder=&quot;0&quot; id=&quot;cmsis&quot; x=&quot;340&quot; y=&quot;20&quot;/&gt;
         &lt;ElementPosition dnOrder=&quot;1&quot; id=&quot;core&quot; x=&quot;240&quot; y=&quot;20&quot;/&gt;
@@ -39,6 +45,7 @@
         &lt;ElementPosition dnOrder=&quot;3&quot; id=&quot;uart0&quot; x=&quot;480&quot; y=&quot;20&quot;/&gt;
       &lt;/ElementPositions&gt;
     &lt;/ComponentGraph&gt;
+    &lt;GraphSettings canvasHeight=&quot;90&quot; canvasWidth=&quot;617&quot; dnOrder=&quot;1&quot;/&gt;
   &lt;/UserData&gt;
 &lt;/UserData&gt;
 </value>
@@ -864,7 +871,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\initialization.c</file>
-         <hash>9039d56bee9f391445a92595c55df2d0fefa2367ef05a30c59ee30c780f4e750</hash>
+         <hash>b1d626b528cc99c03453c7850b506b8b2e3275565439429fd323f7359a0c59e5</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\dma_chan00.h</file>
@@ -888,7 +895,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\gcr.h</file>
-         <hash>ca07074b2dffd613dd8b1c583b3cd5a6338085d252f4f52b01d4a67983dc7692</hash>
+         <hash>408768f204304f68253d124edf048d671f82eed8a003d33d7139ba7aea41b7f2</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\spt1.h</file>
@@ -896,11 +903,11 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\smb1.h</file>
-         <hash>9dc67d022a84c4609305e738e25abb751e4ce943ef73803cf0ae39ee7d2d5bef</hash>
+         <hash>b68ec31053a06899a874130a2251386bad3621dba0a90c183cdfe02bbbeafa9e</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\dma_main.h</file>
-         <hash>4ef00ccadc9d9790fc0b7ca81a9622dcfd6e94d5aba0be5b24e4dd4c25c98529</hash>
+         <hash>8da3a65101836dd5b144d1c2b74c45d101f53981161bfaf147928b1ae90c0a1e</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\smb.h</file>
@@ -928,7 +935,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\toolchain_specifics.h</file>
-         <hash>c93f9d68b1623668727be21b4449250a7e4a5d7040776d6f6d604a7528ffc9eb</hash>
+         <hash>0322d8a252c0047ffd9e533cc76c470158ed1f3ac5193e63b507fe5eb6e1855f</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\gcr.h</file>
@@ -940,7 +947,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\cec1736_s0_2zw.h</file>
-         <hash>c27aa8903e8af0d29005ddf5d4684f52f724dfcf553b53f4b6edbaf4659af18b</hash>
+         <hash>c3e2c4a84be921b0595146d1179bf31076d10d06be86d2c6aa1de72577a28fca</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\gpio\plib_gpio.h</file>
@@ -992,11 +999,11 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\qmspi1.h</file>
-         <hash>217e7d3d837395628a0c79c64160a85874e5da0871cf3016af00cc1f6587c244</hash>
+         <hash>eaa2d7c8c73270ec3c7481fea6b7a46d858cf6d23d0291412f57ee4c4184372c</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\dma_chan01.h</file>
-         <hash>3a1439d283ff35c5e9838d76cb34024cb3545fed732617fc703398533354829c</hash>
+         <hash>070a8291f7276fcd37be92f901bd86142e30ff53c7bde5323d6f9942d7f17dbf</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\rtos.h</file>
@@ -1008,7 +1015,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\smb4.h</file>
-         <hash>c04477122107ec3101f9d35b83ed297112d883839a060fc7f5d3754b2252c75a</hash>
+         <hash>00d2e877562b87dfa405c4de9b7de8b9693db2a1da94e5445c19a7f6a1c52f86</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\cct.h</file>
@@ -1016,7 +1023,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\smb0.h</file>
-         <hash>8c88cbd1c2df9051eaaf2ea5a9a712269a8526738d5d03719d8c646061613425</hash>
+         <hash>28c934d72b9410c86d9fbbaa076bbf7bfa1b9d03423842b9334d906b141102be</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\timer32_1.h</file>
@@ -1076,11 +1083,11 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\interrupts.c</file>
-         <hash>7ae5c866b57522d76000f5af93cfece53fcbea9d31fd1d64570d9bb5f47bac2b</hash>
+         <hash>5ba63ee688b03a7fbd6af249934365c33bf6a8f2d10c9844c16f3b7780697d3e</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\pcr\plib_pcr.c</file>
-         <hash>b0d67a90be561220d9f29603fd1828762b13af394b7a425eaa5979ef71c230c0</hash>
+         <hash>d765c55b1fba44df40f5159adca625bd4a866beafe1644815c91884924b201ed</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\dma_chan04.h</file>
@@ -1092,7 +1099,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\device_vectors.h</file>
-         <hash>279785cb39f9ddcb32c9c5d6bc84c76a067a66c7af5cc8b85a00aef5e73e02ec</hash>
+         <hash>3f044849cc062d72db8e35ea850d39e70c4a0e4b0ca7b17f96b06c1b4a63d220</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\pio\cec1736_s0_2zw.h</file>
@@ -1104,7 +1111,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\pcr\plib_pcr.h</file>
-         <hash>d3028dc515c9dd28ee0055a306b72878dde67d46050a83df506217c6f1de4b91</hash>
+         <hash>a77d352924aa73f1c8708546b15930bf16c305512767b64bdd585d49ce110203</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\definitions.h</file>
@@ -1124,11 +1131,11 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\dma_chan00.h</file>
-         <hash>7deb91d76e346be765cb9f0988d2328784d7f0fa66c0f80a458194d0e7c5c17d</hash>
+         <hash>a98f8db6d3b27ddcbbba374cfba9293323782caa3888c188bd6614a8022a7074</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\ecia.h</file>
-         <hash>6a7ccae1570bf2051d52297515edc366d8f7a7d88fe65b396682e67b57ef4f58</hash>
+         <hash>5c219ff56732e5a9d8183bbbea7b386748f53e61c9d46c2a3a295df400820ee9</hash>
       </entry>
       <entry>
          <file>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_version.h</file>
@@ -1140,7 +1147,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\qmspi0.h</file>
-         <hash>4372af1ec0dbe5da8e61c8089f15bcc9246843932acd7b149564f252c1c31ab9</hash>
+         <hash>ddf11d571fbb2276c6302d301f378962ecc28bae27e7f61f03f6841287c8d2e9</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\otp.h</file>
@@ -1156,7 +1163,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\smb3.h</file>
-         <hash>9d15d30f4deaf127da0b41ed6c4ffc3850dd3bd564471b0fbc194138a30f657e</hash>
+         <hash>b608b3ad1c25b915036e0d066510e1b456afdb4fc66d2fb618a1869f1fe9517d</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\led.h</file>
@@ -1164,7 +1171,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\ecia\plib_ecia.h</file>
-         <hash>c50d30d41a89a9c95637e44e38850270bf8d1f2bfdf7050a3b963dc89fc0794a</hash>
+         <hash>119494e64f0b967845fa6ebcc09e1d6c8713d03b7eba396f027359800cdbc9ac</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\ecia\plib_ecia.c</file>
@@ -1232,7 +1239,7 @@
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\smb2.h</file>
-         <hash>4878a6dc198c0ccf7761e6ecdba959ddd5955e4bb865df50f08724410635d581</hash>
+         <hash>806146a92416e4b7e130fe02561c7513ba7b23f0b5d4121de178d761f536c5a4</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\spt0.h</file>
@@ -1240,7 +1247,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\CEC1736_S0_2ZW.ld</file>
-         <hash>de1c40d75a4332845e40c99b853912fcd083ce66229812e8675623ba0598f6e0</hash>
+         <hash>b10c17a5aa6dbc5a8b14b01bae64b13bb3facef8fe7168d2d7f9b6aa5a2abdd4</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\ecia.h</file>
