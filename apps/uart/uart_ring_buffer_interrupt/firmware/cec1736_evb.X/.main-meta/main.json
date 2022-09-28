@@ -20,7 +20,7 @@
 		],
 		"dfp": {
 			"name": "CEC_DFP",
-			"semverRange": "^1.5.142"
+			"semverRange": "^1.7.151"
 		},
 		"configurator": {
 			"name": "MCC",

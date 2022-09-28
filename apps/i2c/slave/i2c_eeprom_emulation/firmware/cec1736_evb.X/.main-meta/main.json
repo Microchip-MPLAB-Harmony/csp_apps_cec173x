@@ -3,11 +3,11 @@
 	"category": "com.microchip.ide.project",
 	"content": {
 		"metaDataVersion": "1.1.0",
-		"name": "com.microchip.mcu32.mplabx.project.csp_apps_cec173x_gpio_led_on_off_interrupt",
+		"name": "com.microchip.mcu32.mplabx.project.csp_apps_cec173x_i2c_eeprom_emulation",
 		"version": "3.2.0",
-		"displayName": "GPIO interrupt Example for CEC173x Family",
-		"projectName": "gpio_led_on_off_interrupt_cec1736_evb",
-		"shortDescription": "This example application demonstrate how to generate GPIO interrupt on a pin that is configured to generate an interrupt on either (rising or falling) edge, and indicate the pin status using the LED.",
+		"displayName": "I2C EEPROM emulation Example for CEC173x Family",
+		"projectName": "i2c_eeprom_emulation_cec1736_evb",
+		"shortDescription": "This example application demonstrates how to use the I2C peripheral in slave mode.",
 		"ide": {
 			"name": "MPLABX",
 			"semverRange": ">=6.0.0"
@@ -45,26 +45,27 @@
 			[
 				"Harmony",
 				"Peripherals",
-				"GPIO"
+				"SMB",
+                "i2c"
 			],
 			[
 				"Peripherals",
-				"GPIO"
+				"SMB",
+                "i2c"
 			]
 		],
 		"peripherals": [
-			"GPIO"
+			"SMB",
+            "i2c"
 		],
 		"keywords": [
-			"MHC",
+			"MCC",
 			"Harmony",
 			"CEC1736_S0_2ZW",
 			"CEC173x Family",
-			"GPIO",
-			"PORT",
-			"PIO",
-			"I/O",
-			"Pin"
+			"I2C",
+            "SMB",
+			"Serial Communication",
 		],
 		"additionalData": {
 			"longDescription": {

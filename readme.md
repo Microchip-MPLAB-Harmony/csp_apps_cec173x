@@ -37,6 +37,11 @@ The following applications are provided to demonstrate the typical or interestin
 | Name | Description |
 | ---- | ----------- |
 | [GPIO interrupt](apps/gpio/gpio_led_on_off_interrupt/readme.md) | This example application demonstrate how to generate GPIO interrupt on a pin that is configured to generate an interrupt on either (rising or falling) edge, and indicate the pin status using the LED |
+| [I2C EEPROM read write](apps/i2c/master/i2c_eeprom/readme.md) | This example application demonstrates how to use the I2C peripheral to write and read from the I2C serial EEPROM memory |
+| [I2C EEPROM emulation](apps/i2c/slave/i2c_eeprom_emulation/readme.md) | This example application demonstrates how to use the I2C peripheral in slave mode |
+| [I2C SMBUS Master read write](apps/i2c/master/smb_read_write/readme.md) | This example application demonstrates how to use the SMBUS peripheral to read and write data in master mode |
+| [I2C EEPROM emulation](apps/i2c/slave/i2c_eeprom_emulation/readme.md) | This example application demonstrates how to use the I2C peripheral in slave mode |
+| [I2C SMBUS Slave read write](apps/i2c/slave/smb_read_write/readme.md) | This example application demonstrates how to use the SMBUS peripheral to read and write data in slave mode |
 | [UART echo blocking](apps/uart/uart_echo_blocking/readme.md) | This example application demonstrates how to use the UART peripheral to transfer a block of data in a blocking manner |
 | [UART ring buffer](apps/uart/uart_ring_buffer_interrupt/readme.md) | This example application demonstrates how to use the UART peripheral in ring buffer mode |
 
