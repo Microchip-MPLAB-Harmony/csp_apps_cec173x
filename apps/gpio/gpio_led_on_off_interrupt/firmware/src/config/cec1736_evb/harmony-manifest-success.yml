@@ -4,7 +4,7 @@
 
 
 project: gpio_led_on_off_interrupt
-creation_date: 2022-06-22T11:29:44.215+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+creation_date: 2022-09-28T18:37:03.748+05:30[Asia/Calcutta]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
 operating_system: Windows 10
 mhc_mode: IDE            # [IDE|Standalone|Headless]
 mhc_version: v3.8.5
@@ -13,5 +13,6 @@ plugin_version: NA        # if MPLAB X plugin only
 compiler: XC32 (4.10)
 
 modules:
-    - {name: "csp", version: "v3.13.0"}
-    - {name: "dev_packs", version: "v3.13.0"}
+    - {name: "csp", version: "v3.14.0"}
+    - {name: "dev_packs", version: "v3.14.0"}
+
