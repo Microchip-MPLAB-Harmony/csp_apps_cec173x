@@ -44,6 +44,15 @@ The following applications are provided to demonstrate the typical or interestin
 | [I2C SMBUS Slave read write](apps/i2c/slave/smb_read_write/readme.md) | This example application demonstrates how to use the SMBUS peripheral to read and write data in slave mode |
 | [UART echo blocking](apps/uart/uart_echo_blocking/readme.md) | This example application demonstrates how to use the UART peripheral to transfer a block of data in a blocking manner |
 | [UART ring buffer](apps/uart/uart_ring_buffer_interrupt/readme.md) | This example application demonstrates how to use the UART peripheral in ring buffer mode |
+| [WDT Timeout](apps/wdt/wdt_timeout/readme.md) | This example application demonstrates how to use the WDT peripheral |
+| [Timer32 Periodic Timeout](apps/timer32/tmr32_periodic_timeout/readme.md) | This example application demonstrates how to generate periodic timeout using the TIMER32 timer peripheral |
+| [LED Breathing](apps/led/led_breathing/readme.md) | This example application demonstrates how to generate a breathing LED pattern using the Breathing LED peripheral |
+| [HTM (Hibernation Timer) Timeout](apps/htm/htm_timeout/readme.md) | This example application demonstrates how to generate periodic timeout using the Hibernation timer peripheral |
+| [RTOS Timer](apps/rtos/rtos_timer/readme.md) | This example application demonstrates how to generate periodic timeout using the RTOS timer peripheral |
+| [PWM Duty Cycle](apps/pwm/pwm_duty_cycle/readme.md) | This example application demonstrates how to generate PWM output using the PWM peripheral |
+| [CCT Capture mode](apps/cct/cct_capture_mode/readme.md) | This example application demonstrates how to use the Input Capture and Compare Timer peripheral in capture mode |
+
+
 
 ____
 
