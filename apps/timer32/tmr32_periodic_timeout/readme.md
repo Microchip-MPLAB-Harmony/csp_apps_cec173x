@@ -9,7 +9,7 @@ has_toc: false
 
 # Timer32 Periodic Timeout
 
-This example application demonstrates how to generate periodic timeout using the RTOS timer peripheral.
+This example application demonstrates how to generate periodic timeout using the TIMER32 timer peripheral.
 
 ## Description
 
