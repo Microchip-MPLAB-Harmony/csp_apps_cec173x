@@ -117,6 +117,8 @@ void SYS_Initialize ( void* data )
 
 	UART0_Initialize();
 
+EC_REG_BANK_Initialize();
+
 
 
 
