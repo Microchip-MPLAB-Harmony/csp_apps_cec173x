@@ -116,6 +116,8 @@ void SYS_Initialize ( void* data )
 
 
 	SYSTICK_TimerInitialize();
+EC_REG_BANK_Initialize();
+
 
 
 
