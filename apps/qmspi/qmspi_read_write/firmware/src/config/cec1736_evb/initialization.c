@@ -117,6 +117,8 @@ void SYS_Initialize ( void* data )
 
     QMSPI0_Initialize();
 
+EC_REG_BANK_Initialize();
+
 
 
 
