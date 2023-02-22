@@ -54,6 +54,7 @@
 #include "peripheral/ecia/plib_ecia.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/dma/plib_dma.h"
+#include "peripheral/ec_reg_bank/plib_ec_reg_bank.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

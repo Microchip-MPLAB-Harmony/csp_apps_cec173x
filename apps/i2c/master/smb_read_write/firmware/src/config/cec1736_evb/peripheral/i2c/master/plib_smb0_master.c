@@ -19,7 +19,7 @@
 *******************************************************************************/
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018-2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -519,12 +519,15 @@ void I2CSMB0_InterruptHandler(void)
 {
     uint32_t completion_reg;
 
-    ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_I2CSMB0);
+    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_I2CSMB0))
+    {
+        completion_reg = SMB0_REGS->SMB_COMPL[0];
 
-    completion_reg = SMB0_REGS->SMB_COMPL[0];
+        /* Clear the status bits */
+        SMB0_REGS->SMB_COMPL[0] = completion_reg;
 
-    /* Clear the status bits */
-    SMB0_REGS->SMB_COMPL[0] = completion_reg;
-
-    I2CSMB0_HostInterruptHandler(completion_reg);
+        I2CSMB0_HostInterruptHandler(completion_reg);
+        
+        ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_I2CSMB0);
+    }
 }
