@@ -19,7 +19,7 @@
 *******************************************************************************/
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018-2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -508,7 +508,10 @@ static void I2C0_MASTER_InterruptHandler(void)
 
 void I2CSMB0_InterruptHandler(void)
 {
-    ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_I2CSMB0);
-
-    I2C0_MASTER_InterruptHandler();
+    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_I2CSMB0))
+    {
+         I2C0_MASTER_InterruptHandler();
+         
+        ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_I2CSMB0);
+    }
 }
