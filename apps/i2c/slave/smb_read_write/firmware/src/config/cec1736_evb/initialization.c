@@ -119,6 +119,8 @@ void SYS_Initialize ( void* data )
     
     DMA_Initialize();
 
+EC_REG_BANK_Initialize();
+
 
 
 

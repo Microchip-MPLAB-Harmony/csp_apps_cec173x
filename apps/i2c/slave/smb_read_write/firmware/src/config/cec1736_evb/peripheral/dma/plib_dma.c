@@ -21,7 +21,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2021 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2022 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -302,7 +302,10 @@ static void DMA_interruptHandler(DMA_CHANNEL channel)
 
 void DMA_CH00_InterruptHandler( void )
 {
-    ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_DMA_CH00);
-    DMA_interruptHandler(DMA_CHANNEL_0);
+    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_DMA_CH00))
+    {
+        ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_DMA_CH00);
+        DMA_interruptHandler(DMA_CHANNEL_0);
+    }
 }
 
