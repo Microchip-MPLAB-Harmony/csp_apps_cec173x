@@ -1,5 +1,5 @@
 ---
-parent: Harmony 3 peripheral library application examples for CEC 173X family
+parent: Harmony 3 peripheral library application examples for CEC173x family
 title: GPIO interrupt 
 has_children: false
 has_toc: false

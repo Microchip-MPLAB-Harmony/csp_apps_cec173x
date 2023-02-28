@@ -40,7 +40,6 @@ The following applications are provided to demonstrate the typical or interestin
 | [I2C EEPROM read write](apps/i2c/master/i2c_eeprom/readme.md) | This example application demonstrates how to use the I2C peripheral to write and read from the I2C serial EEPROM memory |
 | [I2C EEPROM emulation](apps/i2c/slave/i2c_eeprom_emulation/readme.md) | This example application demonstrates how to use the I2C peripheral in slave mode |
 | [I2C SMBUS Master read write](apps/i2c/master/smb_read_write/readme.md) | This example application demonstrates how to use the SMBUS peripheral to read and write data in master mode |
-| [I2C EEPROM emulation](apps/i2c/slave/i2c_eeprom_emulation/readme.md) | This example application demonstrates how to use the I2C peripheral in slave mode |
 | [I2C SMBUS Slave read write](apps/i2c/slave/smb_read_write/readme.md) | This example application demonstrates how to use the SMBUS peripheral to read and write data in slave mode |
 | [UART echo blocking](apps/uart/uart_echo_blocking/readme.md) | This example application demonstrates how to use the UART peripheral to transfer a block of data in a blocking manner |
 | [UART ring buffer](apps/uart/uart_ring_buffer_interrupt/readme.md) | This example application demonstrates how to use the UART peripheral in ring buffer mode |
@@ -50,6 +49,7 @@ The following applications are provided to demonstrate the typical or interestin
 | [HTM (Hibernation Timer) Timeout](apps/htm/htm_timeout/readme.md) | This example application demonstrates how to generate periodic timeout using the Hibernation timer peripheral |
 | [RTOS Timer](apps/rtos/rtos_timer/readme.md) | This example application demonstrates how to generate periodic timeout using the RTOS timer peripheral |
 | [PWM Duty Cycle](apps/pwm/pwm_duty_cycle/readme.md) | This example application demonstrates how to generate PWM output using the PWM peripheral |
+| [QMSPI flash read write](apps/qmspi/qmspi_read_write/readme.md) | This example shows how to use the QMSPI Peripheral library to perform erase, write and read operation with the QMSPI Serial Flash memory in Quad IO mode |
 | [CCT Capture mode](apps/cct/cct_capture_mode/readme.md) | This example application demonstrates how to use the Input Capture and Compare Timer peripheral in capture mode |
 
 

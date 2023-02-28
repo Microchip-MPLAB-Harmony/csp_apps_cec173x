@@ -1,6 +1,6 @@
 ---
-parent: Harmony 3 peripheral library application examples for  CEC 173X family
-title: SMB master read write 
+parent: Harmony 3 peripheral library application examples for CEC173x family
+title: SMBUS master read write 
 has_children: false
 has_toc: false
 ---

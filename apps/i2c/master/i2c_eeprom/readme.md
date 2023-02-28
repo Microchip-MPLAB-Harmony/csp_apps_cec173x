@@ -1,5 +1,5 @@
 ---
-parent: Harmony 3 peripheral library application examples for  CEC 173X family
+parent: Harmony 3 peripheral library application examples for CEC173x family
 title: I2C EEPROM read write 
 has_children: false
 has_toc: false

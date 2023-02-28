@@ -1,6 +1,6 @@
 ---
 parent: Harmony 3 peripheral library application examples for CEC173x family
-title: HTM Timeout
+title: LED Breathing
 has_children: false
 has_toc: false
 ---
