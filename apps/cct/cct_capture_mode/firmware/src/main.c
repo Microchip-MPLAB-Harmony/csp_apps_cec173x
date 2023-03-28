@@ -56,10 +56,10 @@
 // Section: Main Entry Point
 // *****************************************************************************
 // *****************************************************************************
-volatile uint32_t capTimerCnt = 0;
-volatile uint32_t diffCnt = 0;
-volatile bool capInterrupt = false;
-uint32_t freq = 0;
+volatile static uint32_t capTimerCnt = 0;
+volatile static uint32_t diffCnt = 0;
+volatile static bool capInterrupt = false;
+static uint32_t freq = 0;
 
 void cct_capture_callback(uintptr_t context)
 {

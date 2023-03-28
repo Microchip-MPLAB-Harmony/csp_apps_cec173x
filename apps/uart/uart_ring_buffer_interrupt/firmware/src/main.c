@@ -52,11 +52,11 @@
 #include <stdio.h>
 #include "definitions.h"                // SYS function prototypes
 
-uint8_t txBuffer[50];
+static uint8_t txBuffer[50];
 uint8_t rxBuffer[10];
-volatile uint32_t nBytesRead = 0;
-volatile bool txThresholdEventReceived = false;
-volatile bool rxThresholdEventReceived = false;
+volatile static uint32_t nBytesRead = 0;
+volatile static bool txThresholdEventReceived = false;
+volatile static bool rxThresholdEventReceived = false;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -67,13 +67,13 @@ volatile bool rxThresholdEventReceived = false;
 void usartReadEventHandler(UART_EVENT event, uintptr_t context )
 {
     uint32_t nBytesAvailable = 0;
-    
+
     if (event == UART_EVENT_READ_THRESHOLD_REACHED)
     {
         /* Receiver should atleast have the thershold number of bytes in the ring buffer */
         nBytesAvailable = UART0_ReadCountGet();
-        
-        nBytesRead += UART0_Read((uint8_t*)&rxBuffer[nBytesRead], nBytesAvailable);                          
+
+        nBytesRead += UART0_Read((uint8_t*)&rxBuffer[nBytesRead], nBytesAvailable);
     }
 }
 
@@ -84,81 +84,81 @@ void usartWriteEventHandler(UART_EVENT event, uintptr_t context )
 
 int main ( void )
 {
-    uint32_t nBytes = 0;        
-    
+    uint32_t nBytes = 0;
+
     /* Initialize all modules */
-    SYS_Initialize ( NULL );          
-    
+    SYS_Initialize ( NULL );
+
     /* Register a callback for write events */
     UART0_WriteCallbackRegister(usartWriteEventHandler, (uintptr_t) NULL);
-    
+
     /* Register a callback for read events */
-    UART0_ReadCallbackRegister(usartReadEventHandler, (uintptr_t) NULL);              
-    
+    UART0_ReadCallbackRegister(usartReadEventHandler, (uintptr_t) NULL);
+
     /* Print the size of the read buffer on the terminal */
     nBytes = sprintf((char*)txBuffer, "RX Buffer Size = %d\r\n", (int)UART0_ReadBufferSizeGet());
-    
-    UART0_Write((uint8_t*)txBuffer, nBytes);  
-    
+
+    UART0_Write((uint8_t*)txBuffer, nBytes);
+
     /* Print the size of the write buffer on the terminal */
     nBytes = sprintf((char*)txBuffer, "TX Buffer Size = %d\r\n", (int)UART0_WriteBufferSizeGet());
-    
-    UART0_Write((uint8_t*)txBuffer, nBytes);    
-    
-    UART0_Write((uint8_t*)"Adding 10 characters to the TX buffer - ", sizeof("Adding 10 characters to the TX buffer - "));    
-    
+
+    UART0_Write((uint8_t*)txBuffer, nBytes);
+
+    UART0_Write((uint8_t*)"Adding 10 characters to the TX buffer - ", sizeof("Adding 10 characters to the TX buffer - "));
+
     /* Wait for all bytes to be transmitted out */
-    while (UART0_WriteCountGet() != 0);    
-    
-    UART0_Write((uint8_t*)"0123456789", 10);           
-        
+    while (UART0_WriteCountGet() != 0);
+
+    UART0_Write((uint8_t*)"0123456789", 10);
+
     /* Print the amount of free space available in the TX buffer. This should be 10 bytes less than the configured write buffer size. */
     nBytes = sprintf((char*)txBuffer, "\r\nFree Space in Transmit Buffer = %d\r\n", (int)UART0_WriteFreeBufferCountGet());
 
-    UART0_Write((uint8_t*)txBuffer, nBytes);    
-    
+    UART0_Write((uint8_t*)txBuffer, nBytes);
+
     /* Let's enable notifications to get notified when the TX buffer is empty */
-    UART0_WriteThresholdSet(UART0_WriteBufferSizeGet());   
-    
+    UART0_WriteThresholdSet(UART0_WriteBufferSizeGet());
+
     /* Enable notifications */
     UART0_WriteNotificationEnable(true, false);
-   
+
     /* Wait for the TX buffer to become empty. Flag "txThresholdEventReceived" is set in the callback. */
     while (txThresholdEventReceived == false);
-    
-    txThresholdEventReceived = false;    
-    
+
+    txThresholdEventReceived = false;
+
     /* Disable TX notifications */
     UART0_WriteNotificationEnable(false, false);
-    
-    UART0_Write((uint8_t*)"Enter 10 characters. The received characters are echoed back. \r\n>", sizeof("Enter 10 characters. The received characters are echoed back. \r\n>"));               
-            
+
+    UART0_Write((uint8_t*)"Enter 10 characters. The received characters are echoed back. \r\n>", sizeof("Enter 10 characters. The received characters are echoed back. \r\n>"));
+
     /* Wait till 10 (or more) characters are received */
     while (UART0_ReadCountGet() < 10);
-    
+
     /* At-least 10 characters are available in the RX buffer. Read out into the application buffer */
-    UART0_Read((uint8_t*)rxBuffer, 10);  
-    
+    UART0_Read((uint8_t*)rxBuffer, 10);
+
     /* Echo the received data */
-    UART0_Write((uint8_t*)rxBuffer, 10);    
-    
+    UART0_Write((uint8_t*)rxBuffer, 10);
+
     /* Now demonstrating receiver notifications */
     UART0_Write((uint8_t*)"\r\n Now turning on RX notifications \r\n>", sizeof("\r\n Now turning on RX notifications \r\n>"));
-    
+
     /* For demonstration purpose, set a threshold value to receive a callback after every 5 characters are received */
     UART0_ReadThresholdSet(5);
-    
+
     /* Enable RX event notifications */
     UART0_ReadNotificationEnable(true, false);
-                   
+
     while(1)
     {
         /* Wait until at-least 10 characters are entered by the user */
-        while (nBytesRead < 10);    
-    
+        while (nBytesRead < 10);
+
         /* Echo the received data */
         UART0_Write((uint8_t*)rxBuffer, nBytesRead);
-        
+
         UART0_Write((uint8_t*)"\r\n>", 3);
 
         nBytesRead = 0;

@@ -88,15 +88,15 @@ typedef enum
     HOST_CMD_WRITE_READ_BLOCK,
 }HOST_CMD;
 
-volatile bool transferDone = false;
-volatile uint32_t nBytesRead = 0;
-bool blockRead = false;
-uint32_t nBytesRequested = 0;
-uint8_t wrBuffer[50] = {0};
-uint8_t rdBuffer[50] = {0};
+volatile static bool transferDone = false;
+volatile static uint32_t nBytesRead = 0;
+static bool blockRead = false;
+static uint32_t nBytesRequested = 0;
+static uint8_t wrBuffer[50] = {0};
+static uint8_t rdBuffer[50] = {0};
 
-volatile HOST_STATE state = HOST_STATE_WRITE_BYTE;
-HOST_STATE nextState;
+static volatile HOST_STATE state = HOST_STATE_WRITE_BYTE;
+static HOST_STATE nextState;
 
 void i2cSMB0HostEventHandler (I2C_SMB_HOST_TRANSFER_EVENT event, uintptr_t contextHandle)
 {
