@@ -53,15 +53,15 @@
 #include "plib_rtos_tmr.h"
 #include "peripheral/ecia/plib_ecia.h"
 
-static RTOS_TMR_OBJECT rtosTimerObj;
+volatile static RTOS_TMR_OBJECT rtosTimerObj;
 
 void RTOSTimer_Initialize(void)
 {
     /* Disable RTOS timer. All registers are reset to the default state. */
     RTOS_REGS->RTOS_CTRL &= ~RTOS_CTRL_BLK_EN_Msk;
-    
+
     RTOS_REGS->RTOS_PRLD = 32768;
-    
+
     /* Enable timer module. Set Auto-reload and hardware halt values based on user settings. Do not start the timer. */
     RTOS_REGS->RTOS_CTRL = RTOS_CTRL_BLK_EN_Msk  | RTOS_CTRL_AU_RELOAD_Msk  ;
 }
@@ -117,7 +117,7 @@ void RTOSTimer_CallbackRegister( RTOS_TMR_CALLBACK callback_fn, uintptr_t contex
     rtosTimerObj.context = context;
 }
 
-void RTMR_InterruptHandler(void)
+void __attribute__((used)) RTMR_InterruptHandler(void)
 {
     if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_RTMR) != 0U)
     {
@@ -125,7 +125,8 @@ void RTMR_InterruptHandler(void)
 
         if(rtosTimerObj.callback_fn != NULL)
         {
-            rtosTimerObj.callback_fn(rtosTimerObj.context);
-        }    
+            uintptr_t context = rtosTimerObj.context;
+            rtosTimerObj.callback_fn(context);
+        }
     }
 }
