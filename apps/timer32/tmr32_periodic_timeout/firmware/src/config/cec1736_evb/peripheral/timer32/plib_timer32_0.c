@@ -53,7 +53,7 @@
 #include "plib_timer32_0.h"
 #include "peripheral/ecia/plib_ecia.h"
 
-static TMR32_OBJECT timer32_0Obj;
+volatile static TMR32_OBJECT timer32_0Obj;
 
 void TIMER32_0_Initialize(void)
 {
@@ -129,7 +129,7 @@ void TIMER32_0_CallbackRegister(TMR32_CALLBACK callback_fn, uintptr_t context )
     timer32_0Obj.context = context;
 }
 
-void TIMER32_0_InterruptHandler(void)
+void __attribute__((used)) TIMER32_0_InterruptHandler(void)
 {
     if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_TIMER32_0) != 0U)
     {
@@ -141,7 +141,8 @@ void TIMER32_0_InterruptHandler(void)
         
         if (timer32_0Obj.callback_fn != NULL)
         {
-            timer32_0Obj.callback_fn(status, timer32_0Obj.context);
+            uintptr_t context = timer32_0Obj.context;
+            timer32_0Obj.callback_fn(status, context);
         }
     }
 }
