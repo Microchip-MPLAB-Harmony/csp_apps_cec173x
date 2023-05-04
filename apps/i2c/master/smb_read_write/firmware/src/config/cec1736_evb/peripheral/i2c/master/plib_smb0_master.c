@@ -63,9 +63,9 @@
 #define SMB0_MTXB   (uint32_t*)(SMB0_BASE_ADDRESS + SMB_MTR_TXB_REG_OFST)
 #define SMB0_MRXB   (uint32_t*)(SMB0_BASE_ADDRESS + SMB_MTR_RXB_REG_OFST)
 
-static I2C_SMB_HOST_OBJ smb0HostObj;
+volatile static I2C_SMB_HOST_OBJ smb0HostObj;
 static uint8_t i2csmb0HostWrBuffer[64];
-static uint8_t i2csmb0HostRdBuffer[64];
+volatile static uint8_t i2csmb0HostRdBuffer[64];
 
 void I2CSMB0_Initialize(void)
 {
@@ -178,7 +178,7 @@ bool I2CSMB0_HostTransferSetup(I2C_SMB_HOST_TRANSFER_SETUP* setup, uint32_t srcC
     uint32_t timingValuesIndex = 0;
     float temp;
 
-    if ((setup == NULL) || (smb0HostObj.state != I2C_SMB_HOST_STATE_IDLE))
+    if ((smb0HostObj.state != I2C_SMB_HOST_STATE_IDLE) || (setup == NULL))
     {
         return false;
     }
@@ -293,7 +293,7 @@ static void I2CSMB0_HostWriteRead(I2C_SMB_HOST_PROTOCOL protocol, uint8_t nWrByt
     SMB0_REGS->SMB_CFG[0] |= SMB_CFG_FLUSH_MRBUF_Msk | SMB_CFG_FLUSH_MXBUF_Msk;
 
     /* Configure DMA transfer for the write part (memory to peripheral) of the transfer. DMA channel will be reconfigured for reading (Peripheral to memory ) in the I2CSMB interrupt, once the write part is complete. */
-    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, (void*)i2csmb0HostWrBuffer, SMB0_MTXB, nWrBytes);
+    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, i2csmb0HostWrBuffer, SMB0_MTXB, nWrBytes);
 
     smb0HostObj.state = I2C_SMB_HOST_STATE_TRANSMIT;
 
@@ -411,9 +411,10 @@ uint32_t I2CSMB0_HostBufferRead(void* pBuffer)
     return numBytesAvailable;
 }
 
-void I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
+void __attribute__((used)) I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
 {
     uint8_t PECConfig = ((SMB0_REGS->SMB_CFG[0] & SMB_CFG_PECEN_Msk) != 0U)? 1U: 0U;
+    uintptr_t context = smb0HostObj.context;
 
     if ((completion_reg & SMB_COMPL_MDONE_Msk) != 0U)
     {
@@ -446,7 +447,7 @@ void I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
 
                         smb0HostObj.state = I2C_SMB_HOST_STATE_RECEIVE;
 
-                        (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_MRXB, (void*)i2csmb0HostRdBuffer, smb0HostObj.dmaRdBytes);
+                        (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_MRXB, i2csmb0HostRdBuffer, smb0HostObj.dmaRdBytes);
 
                         /* Re-start the paused host state machine */
                         SMB0_REGS->SMB_MCMD[0] |= SMB_MCMD_MPROCEED_Msk;
@@ -456,7 +457,9 @@ void I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
             else
             {
                 /* Transfer completed without error. Abort the transfer on DMA channel for bulk read transfers. */
-                if (((smb0HostObj.protocol == I2C_SMB_HOST_PROTOCOL_RD_BLK) || (smb0HostObj.protocol == I2C_SMB_HOST_PROTOCOL_WR_BLK_RD_BLK)) && (DMA_ChannelIsBusy(DMA_CHANNEL_0)))
+                I2C_SMB_HOST_PROTOCOL protocol = smb0HostObj.protocol;
+
+                if ((DMA_ChannelIsBusy(DMA_CHANNEL_0)) && ((protocol == I2C_SMB_HOST_PROTOCOL_RD_BLK) || (protocol == I2C_SMB_HOST_PROTOCOL_WR_BLK_RD_BLK)))
                 {
                     DMA_ChannelTransferAbort(DMA_CHANNEL_0);
                 }
@@ -472,7 +475,7 @@ void I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
                     {
                         if (smb0HostObj.callback != NULL)
                         {
-                            smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_RX_READY, smb0HostObj.context);
+                            smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_RX_READY, context);
                         }
                     }
                 }
@@ -483,11 +486,11 @@ void I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
                 {
                     if (smb0HostObj.error == I2C_SMB_HOST_ERROR_NONE)
                     {
-                        (void)smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_DONE, smb0HostObj.context);
+                        (void)smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_DONE, context);
                     }
                     else
                     {
-                        (void)smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_ERROR, smb0HostObj.context);
+                        (void)smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_ERROR, context);
                     }
                 }
             }
@@ -509,17 +512,17 @@ void I2CSMB0_HostInterruptHandler(uint32_t completion_reg)
 
             if (smb0HostObj.callback != NULL)
             {
-                smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_ERROR, smb0HostObj.context);
+                smb0HostObj.callback(I2C_SMB_HOST_TRANSFER_EVENT_ERROR, context);
             }
         }
     }
 }
 
-void I2CSMB0_InterruptHandler(void)
+void __attribute__((used)) I2CSMB0_InterruptHandler(void)
 {
     uint32_t completion_reg;
 
-    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_I2CSMB0))
+    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_I2CSMB0) != 0U)
     {
         completion_reg = SMB0_REGS->SMB_COMPL[0];
 
@@ -527,7 +530,7 @@ void I2CSMB0_InterruptHandler(void)
         SMB0_REGS->SMB_COMPL[0] = completion_reg;
 
         I2CSMB0_HostInterruptHandler(completion_reg);
-        
+
         ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_I2CSMB0);
     }
 }
