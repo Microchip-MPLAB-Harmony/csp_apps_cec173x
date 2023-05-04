@@ -54,9 +54,9 @@
 #include "peripheral/ecia/plib_ecia.h"
 
 
-static CCT_CALLBACK_OBJ CCT_OVF_CallbackObject;
+volatile static CCT_CALLBACK_OBJ CCT_OVF_CallbackObject;
 
-static CCT_CALLBACK_OBJ CCT_CAP0_CallbackObject;
+volatile static CCT_CALLBACK_OBJ CCT_CAP0_CallbackObject;
 
 
 void CCT_Initialize(void)
@@ -74,7 +74,7 @@ void CCT_Initialize(void)
 
 
     CCT_REGS->CCT_MUX_SEL = CCT_MUX_SEL_CAP0(0);
-    
+
 }
 
 /* Brings timer block in running state */
@@ -165,28 +165,30 @@ uint32_t CCT_CaptureChannel0Get( void )
 
 
 
-void CCT_InterruptHandler(void)
+void __attribute__((used)) CCT_InterruptHandler(void)
 {
     if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_CCT) != 0U)
     {
         ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_CCT);
-        
+
         if (CCT_OVF_CallbackObject.callback != NULL)
         {
-            CCT_OVF_CallbackObject.callback(CCT_OVF_CallbackObject.context);
+            uintptr_t context = CCT_OVF_CallbackObject.context;
+            CCT_OVF_CallbackObject.callback(context);
         }
     }
 }
 
-void CCT_CAP0_InterruptHandler(void)
+void __attribute__((used)) CCT_CAP0_InterruptHandler(void)
 {
     if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_CCT_CAP0) != 0U)
     {
         ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_CCT_CAP0);
-        
+
         if (CCT_CAP0_CallbackObject.callback != NULL)
         {
-            CCT_CAP0_CallbackObject.callback(CCT_CAP0_CallbackObject.context);
+            uintptr_t context = CCT_CAP0_CallbackObject.context;
+            CCT_CAP0_CallbackObject.callback(context);
         }
     }
 }
