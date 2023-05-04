@@ -105,7 +105,7 @@ typedef uint32_t DMA_CHANNEL_CONFIG;
 typedef void (*DMA_CHANNEL_CALLBACK) (DMA_TRANSFER_EVENT event, uintptr_t contextHandle);
 
 void DMA_Initialize( void );
-bool DMA_ChannelTransfer( DMA_CHANNEL channel, const void *srcAddr, const void *destAddr, size_t blockSize );
+bool DMA_ChannelTransfer( DMA_CHANNEL channel, volatile const void *srcAddr, volatile const void *destAddr, size_t blockSize );
 void DMA_ChannelCallbackRegister( DMA_CHANNEL channel, const DMA_CHANNEL_CALLBACK callback, const uintptr_t context );
 bool DMA_ChannelIsBusy ( DMA_CHANNEL channel );
 void DMA_ChannelDisable ( DMA_CHANNEL channel );

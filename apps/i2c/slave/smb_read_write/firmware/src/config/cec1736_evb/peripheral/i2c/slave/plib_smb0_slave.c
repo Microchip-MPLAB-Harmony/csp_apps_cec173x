@@ -63,9 +63,9 @@
 #define SMB0_STXB   (uint32_t*)(SMB0_BASE_ADDRESS + SMB_SLV_TXB_REG_OFST)
 #define SMB0_SRXB   (uint32_t*)(SMB0_BASE_ADDRESS + SMB_SLV_RXB_REG_OFST)
 
-static I2C_SMB_TARGET_OBJ smb0TargetObj;
-static uint8_t i2csmb0TargetWrBuffer[64];
-static uint8_t i2csmb0TargetRdBuffer[64];
+volatile static I2C_SMB_TARGET_OBJ smb0TargetObj;
+volatile static uint8_t i2csmb0TargetWrBuffer[64];
+volatile static uint8_t i2csmb0TargetRdBuffer[64];
 
 void I2CSMB0_Initialize(void)
 {
@@ -180,7 +180,7 @@ void I2CSMB0_TargetStart(void)
     smb0TargetObj.dmaDir = I2C_SMB_TARGET_DMA_DIR_PER_TO_MEM;
 
     /* Configure DMA for Slave RX */
-    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_SRXB, (void*)i2csmb0TargetRdBuffer, sizeof(i2csmb0TargetRdBuffer));
+    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_SRXB, i2csmb0TargetRdBuffer, sizeof(i2csmb0TargetRdBuffer));
 
     /* Enable SDONE (Slave Done) interrupt */
     SMB0_REGS->SMB_CFG[0] |= SMB_CFG_ENSI_Msk;
@@ -216,9 +216,10 @@ void I2CSMB0_TargetBufferWrite(void* pBuffer, uint32_t nBytes)
     smb0TargetObj.txCount = nBytes;
 }
 
-void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
+void __attribute__((used)) I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
 {
     uint8_t PECConfig = ((SMB0_REGS->SMB_CFG[0] & SMB_CFG_PECEN_Msk) != 0U)? 1U: 0U;
+    uintptr_t context = smb0TargetObj.context;
 
     if ((completion_reg & SMB_COMPL_SDONE_Msk) != 0U)
     {
@@ -232,7 +233,10 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
         {
             smb0TargetObj.error |= I2C_SMB_TARGET_ERROR_TIMEOUT;
         }
-        if (((SMB0_REGS->SMB_SCMD[0] & SMB_SCMD_SRUN_Msk) != 0U) && (smb0TargetObj.error == I2C_SMB_TARGET_ERROR_NONE))
+
+        I2C_SMB_TARGET_ERROR error = smb0TargetObj.error;
+
+        if (((SMB0_REGS->SMB_SCMD[0] & SMB_SCMD_SRUN_Msk) != 0U) && (error == I2C_SMB_TARGET_ERROR_NONE))
         {
             if ((SMB0_REGS->SMB_SCMD[0] & SMB_SCMD_SPROCEED_Msk) == 0U)
             {
@@ -245,7 +249,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
 
                         if (smb0TargetObj.callback != NULL)
                         {
-                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_RX_READY, smb0TargetObj.context);
+                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_RX_READY, context);
                         }
                     }
                     else
@@ -254,7 +258,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
                         if ((completion_reg & SMB_COMPL_SPROT_Msk) != 0U)
                         {
                             smb0TargetObj.error |= I2C_SMB_TARGET_ERROR_SPROT;
-                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_ERROR, smb0TargetObj.context);
+                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_ERROR, context);
                         }
                     }
                     if ((completion_reg & SMB_COMPL_REP_RD_Msk) != 0U)
@@ -262,7 +266,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
                         if (smb0TargetObj.callback != NULL)
                         {
                             /* Application is expected to frame the response and make the response available by calling the I2CSMB0_TargetBufferWrite() API */
-                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_TX_READY, smb0TargetObj.context);
+                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_TX_READY, context);
                         }
 
                         smb0TargetObj.transferDir = I2C_SMB_TARGET_TRANSFER_DIR_READ;
@@ -275,7 +279,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
                 else if (((SMB0_REGS->SMB_RSTS & SMB_RSTS_AAS_Msk) != 0U) && ((SMB0_REGS->SMB_SHDW_DATA & 0x01U) != 0U))
                 {
                     /* This is executed when Host sends a Read request after a normal start bit (not repeated start). Application is expected to frame the response and make the response available by calling the I2CSMB0_SMBUSBufferWrite() API */
-                    (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_TX_READY, smb0TargetObj.context);
+                    (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_TX_READY, context);
                     smb0TargetObj.transferDir = I2C_SMB_TARGET_TRANSFER_DIR_READ;
                 }
                 else
@@ -288,7 +292,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
                 if (smb0TargetObj.transferDir == I2C_SMB_TARGET_TRANSFER_DIR_WRITE)
                 {
                     /* Enter here when a Repeated Write request is received. Configure DMA for Target RX (peripheral to memory). */
-                    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_SRXB, (void*)i2csmb0TargetRdBuffer, sizeof(i2csmb0TargetRdBuffer));
+                    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_SRXB, i2csmb0TargetRdBuffer, sizeof(i2csmb0TargetRdBuffer));
 
                     /* Set the target command and start the transfer */
                     SMB0_REGS->SMB_SCMD[0] = SMB_SCMD_RD_CNT(sizeof(i2csmb0TargetRdBuffer)) | SMB_SCMD_SRUN_Msk | SMB_SCMD_SPROCEED_Msk | SMB_SCMD_PEC(PECConfig);
@@ -298,7 +302,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
                 else
                 {
                     /* Enter here when Repeated Read request is received. Configure DMA for Target TX (memory to peripheral) */
-                    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, (void*)i2csmb0TargetWrBuffer, SMB0_STXB, sizeof(i2csmb0TargetWrBuffer));
+                    (void)DMA_ChannelTransfer(DMA_CHANNEL_0, i2csmb0TargetWrBuffer, SMB0_STXB, sizeof(i2csmb0TargetWrBuffer));
 
                     /* Set the target command and start the transfer */
                     SMB0_REGS->SMB_SCMD[0] = SMB_SCMD_WR_CNT(smb0TargetObj.txCount) | SMB_SCMD_SRUN_Msk | SMB_SCMD_SPROCEED_Msk | SMB_SCMD_PEC(PECConfig);
@@ -330,7 +334,7 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
                     {
                         if (smb0TargetObj.error == I2C_SMB_TARGET_ERROR_NONE)
                         {
-                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_RX_READY, smb0TargetObj.context);
+                            (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_RX_READY, context);
                         }
                     }
                 }
@@ -357,29 +361,29 @@ void I2CSMB0_TargetInterruptHandler(uint32_t completion_reg)
             {
                 if (smb0TargetObj.error == I2C_SMB_TARGET_ERROR_NONE)
                 {
-                    (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_DONE, smb0TargetObj.context);
+                    (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_DONE, context);
                 }
                 else
                 {
-                    (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_ERROR, smb0TargetObj.context);
+                    (void)smb0TargetObj.callback(I2C_SMB_TARGET_TRANSFER_EVENT_ERROR, context);
                 }
             }
 
             smb0TargetObj.error = I2C_SMB_TARGET_ERROR_NONE;
             smb0TargetObj.dmaDir = I2C_SMB_TARGET_DMA_DIR_PER_TO_MEM;
 
-            (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_SRXB, (void*)i2csmb0TargetRdBuffer, sizeof(i2csmb0TargetRdBuffer));
+            (void)DMA_ChannelTransfer(DMA_CHANNEL_0, SMB0_SRXB, i2csmb0TargetRdBuffer, sizeof(i2csmb0TargetRdBuffer));
             /* Set the target command and start the transfer */
             SMB0_REGS->SMB_SCMD[0] = SMB_SCMD_RD_CNT(sizeof(i2csmb0TargetRdBuffer)) | SMB_SCMD_SRUN_Msk | SMB_SCMD_SPROCEED_Msk | SMB_SCMD_PEC(PECConfig);
         }
     }
 }
 
-void I2CSMB0_InterruptHandler(void)
+void __attribute__((used)) I2CSMB0_InterruptHandler(void)
 {
     uint32_t completion_reg;
-    
-    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_I2CSMB0))
+
+    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_I2CSMB0) != 0U)
     {
         completion_reg = SMB0_REGS->SMB_COMPL[0];
 
@@ -387,7 +391,7 @@ void I2CSMB0_InterruptHandler(void)
         SMB0_REGS->SMB_COMPL[0] = completion_reg;
 
         I2CSMB0_TargetInterruptHandler(completion_reg);
-        
+
         ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_I2CSMB0);
     }
 }
