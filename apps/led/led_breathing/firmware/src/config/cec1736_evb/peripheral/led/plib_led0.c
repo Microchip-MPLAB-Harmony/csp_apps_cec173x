@@ -76,7 +76,7 @@ void LED0_Initialize(void)
 
 void LED0_DutyCycleMinSet(uint8_t min)
 {
-    LED0_REGS->LED_LIMIT = (LED0_REGS->LED_LIMIT & LED_LIMIT_MIN_Msk) | min;
+    LED0_REGS->LED_LIMIT = (LED0_REGS->LED_LIMIT & ~LED_LIMIT_MIN_Msk) | min;
 }
 
 void LED0_DutyCycleMaxSet(uint8_t max)
