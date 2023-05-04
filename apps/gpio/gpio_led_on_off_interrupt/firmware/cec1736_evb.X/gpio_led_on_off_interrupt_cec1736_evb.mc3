@@ -1,4 +1,4 @@
-<config configName="cec1736_evb" projectName="gpio_led_on_off_interrupt_cec1736_evb" configVersion="1.1" device="CEC1736_S0_2ZW" deviceLibraryClass="com.microchip.mcc.harmony.Harmony3Library" coreVersion="5.4.3">
+<config configName="cec1736_evb" projectName="gpio_led_on_off_interrupt_cec1736_evb" configVersion="1.1" device="CEC1736_S0_2ZW" deviceLibraryClass="com.microchip.mcc.harmony.Harmony3Library" coreVersion="5.5.0">
    <usedPackages class="java.util.ArrayList"/>
    <usedClasses class="java.util.TreeMap">
       <entry>
@@ -15,7 +15,7 @@
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
-      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.harmony.Harmony3Library" version="1.2.0"/>
+      <ILibraryFile class="com.microchip.mcc.core.library.BaseLibraryFile" libraryClass="com.microchip.mcc.harmony.Harmony3Library" version="1.3.1"/>
    </usedLibraries>
    <tokenMap class="java.util.TreeMap">
       <entry>
@@ -760,7 +760,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\gpio\plib_gpio.c</file>
-         <hash>3eb8a7075bbe55b45dfaab69d59280919c8a21572380a480f671280305125321</hash>
+         <hash>9aa6fb7e9b4d9360ec1432c9775ad68e8e70d034bbf5a481ab2b9d6f4c1aec06</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\ec_reg_bank.h</file>
@@ -776,7 +776,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\toolchain_specifics.h</file>
-         <hash>c93f9d68b1623668727be21b4449250a7e4a5d7040776d6f6d604a7528ffc9eb</hash>
+         <hash>a4f1774c6f1f8c6cd522567536c9e9d75ca63259b868015ac9b0fb0aeeffe1f4</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\gcr.h</file>
@@ -880,7 +880,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\nvic\plib_nvic.c</file>
-         <hash>4190c9da1f78e39ff7ff0b995da0102f376d9df4a67f8b7631a01636ff9e88bb</hash>
+         <hash>4a9cb942c49cdb66de1c5bbe2cc0593318906d0085b87b70a260cf8baa54c28a</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\htm.h</file>
@@ -888,7 +888,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\systick\plib_systick.c</file>
-         <hash>37b29f93d2d606340aeee92a963333b3856c4b57f0b656e817905345dec54a4a</hash>
+         <hash>014d5ce9f9c12613422ac5fd2abc75d38fbbdd1051cdcc498bc373a8f79a007b</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\device_cache.h</file>
@@ -932,7 +932,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\interrupts.c</file>
-         <hash>36dcd41ae28df55aabcdb0bbc8a271d8d8b3dd81d55fff97abbea094312163ae</hash>
+         <hash>94fa52fa36e3dcf960157956d9401b3a959a21d1bcf3821d2e0bae0e9eb35463</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\pcr\plib_pcr.c</file>
@@ -964,7 +964,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\definitions.h</file>
-         <hash>263b8615a5da8151ad818cd4c22e17445b0e8d507005374f09fcfffea3a899b8</hash>
+         <hash>466b70102d0a25a0f67762cf2222ddb4b661ea3d7ff903c2f4a6b36bf56a059c</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\component\timer32.h</file>
@@ -1028,7 +1028,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\startup_xc32.c</file>
-         <hash>5c7069cf4c253dac56689121d7bb12822596270ec68403997865486b57e0561b</hash>
+         <hash>ae8889b90560858b225c5e014a4c3e0fc8052db4011f079d84d15222fe4d4d2b</hash>
       </entry>
       <entry>
          <file>..\src\packs\CMSIS\CMSIS\Core\Include\cmsis_armclang_ltm.h</file>
@@ -1052,7 +1052,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\exceptions.c</file>
-         <hash>887ebb647a339393c5f6e5adf42edc62038fe31f8401b9c077a8808f6a101aa6</hash>
+         <hash>1fd383302c4cdf1cc6a804aa03b8abe8c1e5e5e9ea3450438c34dcea441e6b34</hash>
       </entry>
       <entry>
          <file>..\src\packs\CEC1736_S0_2ZW_DFP\instance\dma_chan07.h</file>
@@ -1072,7 +1072,7 @@
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\ec_reg_bank\plib_ec_reg_bank.c</file>
-         <hash>3284ab602c3e11a5460d8d2a0e106f1a4e7e089b5ecca1b3061cfd35dca0208c</hash>
+         <hash>52d72bd521bc62868a7d73b37f7634fd7d91766760ce71c78ce83cb46446161b</hash>
       </entry>
       <entry>
          <file>..\src\config\cec1736_evb\peripheral\ec_reg_bank\plib_ec_reg_bank.h</file>

@@ -56,7 +56,7 @@
 
 
 #define TOTAL_NUM_OF_INT_USED 1U
-static GPIO_PIN_CALLBACK_OBJ pinCallbackObj[TOTAL_NUM_OF_INT_USED];
+volatile static GPIO_PIN_CALLBACK_OBJ pinCallbackObj[TOTAL_NUM_OF_INT_USED];
 
 #define GET_PINCTRL_REG_ADDR(pin)   (&GPIO_REGS->GPIO_CTRL0[0] + (uint32_t)(pin))
 #define GET_PINCTRL2_REG_ADDR(pin)   (&GPIO_REGS->GPIO_CTRL2P0[0] + (uint32_t)(pin))
@@ -80,7 +80,7 @@ void GPIO_PinDirConfig(GPIO_PIN pin, GPIO_DIR dir)
 void GPIO_PinOutputEnable(GPIO_PIN pin)
 {
     volatile uint32_t* pin_ctrl_reg = GET_PINCTRL_REG_ADDR(pin);
-    *pin_ctrl_reg = (*pin_ctrl_reg) | GPIO_DIR_OUTPUT;
+    *pin_ctrl_reg = (*pin_ctrl_reg) | (uint32_t)GPIO_DIR_OUTPUT;
 }
 
 void GPIO_PinInputEnable(GPIO_PIN pin)
@@ -146,7 +146,7 @@ uint8_t GPIO_PinRead(GPIO_PIN pin)
 void GPIO_PinWrite(GPIO_PIN pin, bool value)
 {
     volatile uint32_t* pin_ctrl_reg = GET_PINCTRL_REG_ADDR(pin);
-    *pin_ctrl_reg = (*pin_ctrl_reg & ~GPIO_CTRL0_ALT_GPIO_DATA_Msk) | (value << GPIO_CTRL0_ALT_GPIO_DATA_Pos);
+    *pin_ctrl_reg = (*pin_ctrl_reg & ~GPIO_CTRL0_ALT_GPIO_DATA_Msk) | ((value ? 1UL : 0UL) << GPIO_CTRL0_ALT_GPIO_DATA_Pos);
 }
 
 uint8_t GPIO_PinLatchRead(GPIO_PIN pin)
@@ -328,14 +328,15 @@ bool GPIO_PinInterruptCallbackRegister(
     return false;
 }
 
-void GPIO132_GRP_InterruptHandler(void)
+void __attribute__((used)) GPIO132_GRP_InterruptHandler(void)
 {
     if ((ECIA_REGS->ECIA_RESULT9 & ((uint32_t)1U << 26)) != 0U)
     {
         ECIA_REGS->ECIA_SRC9 |= ((uint32_t)1U << 26);
         if (pinCallbackObj[0].callback != NULL)
         {
-            pinCallbackObj[0].callback(GPIO_PIN_GPIO132, pinCallbackObj[0].context);
+            uintptr_t context = pinCallbackObj[0].context;
+            pinCallbackObj[0].callback(GPIO_PIN_GPIO132, context);
         }
     }
 }
