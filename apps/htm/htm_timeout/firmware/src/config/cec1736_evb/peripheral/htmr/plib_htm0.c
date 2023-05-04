@@ -53,7 +53,7 @@
 #include "plib_htm0.h"
 #include "peripheral/ecia/plib_ecia.h"
 
-static HTM_TMR_OBJECT htm0Obj;
+volatile static HTM_TMR_OBJECT htm0Obj;
 
 void HTM0_Initialize(void)
 {
@@ -89,7 +89,7 @@ void HTM0_CallbackRegister( HTM_TMR_CALLBACK callback_fn, uintptr_t context )
     htm0Obj.context = context;
 }
 
-void HTMR0_InterruptHandler(void)
+void __attribute__((used)) HTMR0_InterruptHandler(void)
 {
     if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_HTMR0) != 0U)
     {
@@ -97,7 +97,8 @@ void HTMR0_InterruptHandler(void)
 
         if(htm0Obj.callback_fn != NULL)
         {
-            htm0Obj.callback_fn(htm0Obj.context);
+            uintptr_t context = htm0Obj.context;
+            htm0Obj.callback_fn(context);
         }
     }
 }
