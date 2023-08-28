@@ -51,7 +51,8 @@ The following applications are provided to demonstrate the typical or interestin
 | [UART echo blocking](apps/uart/uart_echo_blocking/readme.md) | This example application demonstrates how to use the UART peripheral to transfer a block of data in a blocking manner |
 | [UART ring buffer](apps/uart/uart_ring_buffer_interrupt/readme.md) | This example application demonstrates how to use the UART peripheral in ring buffer mode |
 | [WDT Timeout](apps/wdt/wdt_timeout/readme.md) | This example application demonstrates how to use the WDT peripheral |
-
+| [SPI W25 flash read write](apps/spi/master/spi_w25_flash_read_write/readme.md) | This example shows how to use the QMSPI Peripheral library in SPI (master) mode to perform erase, write and read operation with the onboard W25 Serial Flash memory |
+| [SPI Host Target Write Read](apps/spt/spi_host_target_write_read/readme.md) | This example application demonstrates how to SPI host can write and read data from a SPI target (SPT) |
 ____
 
 [![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/csp_apps_cec173x/blob/master/mplab_harmony_license.md)

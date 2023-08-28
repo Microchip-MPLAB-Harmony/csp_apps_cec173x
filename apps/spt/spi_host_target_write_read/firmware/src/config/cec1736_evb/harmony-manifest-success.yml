@@ -15,5 +15,5 @@ compiler: XC32 (v4.30)
 
 modules:
     - {name: "csp", version: "v3.18.0"}
-    - {name: "dev_packs", version: "v3.18.0"}
+    - {name: "dev_packs", version: "v3.17.0"}
 
