@@ -103,7 +103,8 @@ void i2cSMB0HostEventHandler (I2C_SMB_HOST_TRANSFER_EVENT event, uintptr_t conte
     switch(event)
     {
         case I2C_SMB_HOST_TRANSFER_EVENT_RX_READY:
-            nBytesRead = I2CSMB0_HostBufferRead(rdBuffer);
+            /* Last byte read is PEC. Discard it. */
+            nBytesRead = I2CSMB0_HostBufferRead(rdBuffer) - 1;
             break;
 
         case I2C_SMB_HOST_TRANSFER_EVENT_DONE:

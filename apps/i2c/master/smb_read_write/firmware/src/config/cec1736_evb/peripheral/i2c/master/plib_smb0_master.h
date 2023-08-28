@@ -81,6 +81,7 @@ void I2CSMB0_HostReadByte(uint8_t address, uint8_t cmd);
 void I2CSMB0_HostReadWord(uint8_t address, uint8_t cmd);
 void I2CSMB0_HostReadBlock(uint8_t address, uint8_t cmd);
 void I2CSMB0_HostWriteReadBlock(uint8_t address, uint8_t cmd, void* pWrdata, uint32_t nWrBytes);
+void I2CSMB0_HostProcessCall(uint8_t address, uint8_t cmd, void* pWrdata);
 uint32_t I2CSMB0_HostTransferCountGet(void);
 uint32_t I2CSMB0_HostBufferRead(void* pBuffer);
 void I2CSMB0_HostInterruptHandler(uint32_t completion_reg);
