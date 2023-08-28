@@ -80,14 +80,14 @@
 #define SPT_INT_InputEnable()       (GPIO_REGS->GPIO_CTRL13[2] &= ~GPIO_CTRL0_GPIO_DIR_Msk)
 #define SPT_INT_Get()               ((GPIO_REGS->GPIO_CTRL13[2] & GPIO_CTRL0_GPIO_INP_Msk)? 1 : 0)
 #define SPT_INT_PIN                  GPIO132
-/*** Macros for LED5 pin ***/
-#define LED5_Set()               (GPIO_REGS->GPIO_CTRL15[6] |= GPIO_CTRL0_ALT_GPIO_DATA_Msk)
-#define LED5_Clear()             (GPIO_REGS->GPIO_CTRL15[6] &= ~GPIO_CTRL0_ALT_GPIO_DATA_Msk)
-#define LED5_Toggle()            (GPIO_REGS->GPIO_CTRL15[6] ^= GPIO_CTRL0_ALT_GPIO_DATA_Msk)
-#define LED5_OutputEnable()      (GPIO_REGS->GPIO_CTRL15[6] |= GPIO_CTRL0_GPIO_DIR_Msk)
-#define LED5_InputEnable()       (GPIO_REGS->GPIO_CTRL15[6] &= ~GPIO_CTRL0_GPIO_DIR_Msk)
-#define LED5_Get()               ((GPIO_REGS->GPIO_CTRL15[6] & GPIO_CTRL0_GPIO_INP_Msk)? 1 : 0)
-#define LED5_PIN                  GPIO156
+/*** Macros for LED6 pin ***/
+#define LED6_Set()               (GPIO_REGS->GPIO_CTRL15[6] |= GPIO_CTRL0_ALT_GPIO_DATA_Msk)
+#define LED6_Clear()             (GPIO_REGS->GPIO_CTRL15[6] &= ~GPIO_CTRL0_ALT_GPIO_DATA_Msk)
+#define LED6_Toggle()            (GPIO_REGS->GPIO_CTRL15[6] ^= GPIO_CTRL0_ALT_GPIO_DATA_Msk)
+#define LED6_OutputEnable()      (GPIO_REGS->GPIO_CTRL15[6] |= GPIO_CTRL0_GPIO_DIR_Msk)
+#define LED6_InputEnable()       (GPIO_REGS->GPIO_CTRL15[6] &= ~GPIO_CTRL0_GPIO_DIR_Msk)
+#define LED6_Get()               ((GPIO_REGS->GPIO_CTRL15[6] & GPIO_CTRL0_GPIO_INP_Msk)? 1 : 0)
+#define LED6_PIN                  GPIO156
 
 // *****************************************************************************
 /* GPIO Pins

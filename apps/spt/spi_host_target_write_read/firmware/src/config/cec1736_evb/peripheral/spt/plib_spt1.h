@@ -97,20 +97,16 @@ void SPT1_QuadModeDisable(void);
 
 void SPT1_ECInterruptEnable(SPT_EC_INT int_en);
 
-uint32_t SPT1_MailBoxRead(void);
-
-void SPT1_MailBoxWrite(uint32_t data);
-
 void SPT1_CallbackRegister( SPT_CALLBACK callback, uintptr_t context );
+
+void SPT1_MEM0Config(uint32_t bar, uint32_t wr_lim, uint32_t rd_lim);
+
+void SPT1_MEM1Config(uint32_t bar, uint32_t wr_lim, uint32_t rd_lim);
 
 
 uint32_t SPT1_ECStatusRegGet(void);
 
 void SPT1_ECStatusRegClear(uint32_t bitmask);
-
-void SPT1_MEM0Config(uint32_t bar, uint32_t wr_lim, uint32_t rd_lim);
-
-void SPT1_MEM1Config(uint32_t bar, uint32_t wr_lim, uint32_t rd_lim);
 
 void SPT1_MEM0Enable(void);
 
@@ -127,6 +123,20 @@ uint32_t SPT1_TXFIFOByteCountGet(void);
 uint32_t SPT1_RXFIFOBaseAddrGet(void);
 
 uint32_t SPT1_TXFIFOBaseAddrGet(void);
+
+void SPT1_Enable(void);
+
+void SPT1_Disable(void);
+
+
+uint32_t SPT1_HostToECMBXRead(void);
+
+void SPT1_HostToECMBXClr(void);
+
+void SPT1_ECToHostMBXWrite(uint32_t val);
+
+uint32_t SPT1_ECToHostMBXRead(void);
+
 
 
 #ifdef __cplusplus // Provide C++ Compatibility

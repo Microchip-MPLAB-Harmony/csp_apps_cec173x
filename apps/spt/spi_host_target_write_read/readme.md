@@ -62,5 +62,5 @@ The following table provides the LED name:
 
 | Board      | LED Name |
 | ---------- | ---------------- |
-| [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A) | LED5 |
+| [CEC 1736 Development Board](https://www.microchip.com/en-us/development-tool/EV19K07A) | LED6 |
 |||

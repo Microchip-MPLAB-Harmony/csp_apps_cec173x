@@ -93,16 +93,6 @@ void SPT1_ECInterruptEnable(SPT_EC_INT int_en)
     SPT1_REGS->SPT_EC_IEN = (uint32_t)int_en;
 }
 
-uint32_t SPT1_MailBoxRead(void)
-{
-    return SPT1_REGS->SPT_SPIM2EC_MBX;
-}
-
-void SPT1_MailBoxWrite(uint32_t data)
-{
-    SPT1_REGS->SPT_EC2SPIM_MBX = data;
-}
-
 void SPT1_CallbackRegister( SPT_CALLBACK callback, uintptr_t context )
 {
     SPT1_CallbackObject.callback = callback;
@@ -175,6 +165,37 @@ uint32_t SPT1_RXFIFOBaseAddrGet(void)
 uint32_t SPT1_TXFIFOBaseAddrGet(void)
 {
     return SPT1_REGS->SPT_TXF_HOST_BAR;
+}
+
+void SPT1_Enable(void)
+{
+    SPT1_REGS->SPT_SYS_CFG |= SPT_SYS_CFG_SPI_SLV_EN_Msk;
+}
+
+void SPT1_Disable(void)
+{
+    SPT1_REGS->SPT_SYS_CFG &= ~SPT_SYS_CFG_SPI_SLV_EN_Msk;
+}
+
+
+uint32_t SPT1_HostToECMBXRead(void)
+{
+    return SPT1_REGS->SPT_SPIM2EC_MBX;
+}
+
+void SPT1_HostToECMBXClr(void)
+{
+    SPT1_REGS->SPT_SPIM2EC_MBX = 0xFFFFFFFF;
+}
+
+void SPT1_ECToHostMBXWrite(uint32_t val)
+{
+    SPT1_REGS->SPT_EC2SPIM_MBX = val;
+}
+
+uint32_t SPT1_ECToHostMBXRead(void)
+{
+    return SPT1_REGS->SPT_EC2SPIM_MBX;
 }
 
 

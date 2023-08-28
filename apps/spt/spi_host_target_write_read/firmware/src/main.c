@@ -42,8 +42,8 @@ typedef enum
     APP_STATE_FAILED,
 }APP_STATE;
 
-#define LED_Off()                                 LED5_Clear()
-#define LED_On()                                  LED5_Set()
+#define LED_Off()                                 LED6_Clear()
+#define LED_On()                                  LED6_Set()
 
 #define CMD_MEM_W8              0x21
 #define CMD_MEM_W32             0x23
