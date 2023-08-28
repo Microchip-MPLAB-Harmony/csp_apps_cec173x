@@ -72,7 +72,6 @@ typedef enum
 
 volatile uint8_t targetRxBuffer[100];
 volatile uint8_t targetTxBuffer[100];
-volatile uint32_t nBytesRead = 0;
 volatile uint32_t nDataBytes = 0;
 volatile HOST_CMD command;
 
@@ -80,8 +79,10 @@ bool i2cSMB0TargetEventHandler (I2C_SMB_TARGET_TRANSFER_EVENT event, uintptr_t c
 {
     switch (event)
     {
-        case I2C_SMB_TARGET_TRANSFER_EVENT_RX_READY:
-            nBytesRead = I2CSMB0_TargetBufferRead((void*)targetRxBuffer);
+        case I2C_SMB_TARGET_TRANSFER_EVENT_RX_READY:            
+            
+            I2CSMB0_TargetBufferRead((void*)targetRxBuffer);
+            
             command = targetRxBuffer[1];
             if (command == HOST_CMD_WRITE_BYTE)
             {

@@ -64,8 +64,8 @@
 #define SMB0_SRXB   (uint32_t*)(SMB0_BASE_ADDRESS + SMB_SLV_RXB_REG_OFST)
 
 volatile static I2C_SMB_TARGET_OBJ smb0TargetObj;
-volatile static uint8_t i2csmb0TargetWrBuffer[64];
-volatile static uint8_t i2csmb0TargetRdBuffer[64];
+volatile static uint8_t i2csmb0TargetWrBuffer[255];
+volatile static uint8_t i2csmb0TargetRdBuffer[255];
 
 void I2CSMB0_Initialize(void)
 {
@@ -244,8 +244,8 @@ void __attribute__((used)) I2CSMB0_TargetInterruptHandler(uint32_t completion_re
                 {
                     if (smb0TargetObj.dmaDir == I2C_SMB_TARGET_DMA_DIR_PER_TO_MEM)
                     {
-                        /* Read DMA transfer count and discard the address byte and the address byte received after repeated start. Additionally discard the PEC register written by slave state machine if PEC is enabled. */
-                        smb0TargetObj.rxCount = (DMA_ChannelGetTransferredCount(DMA_CHANNEL_0) - 2U) - ((PECConfig == 1U)? 1U : 0U);
+                        /* Read DMA transfer count and discard the address byte and the address byte received after repeated start */
+                        smb0TargetObj.rxCount = (DMA_ChannelGetTransferredCount(DMA_CHANNEL_0) - 2U);
 
                         if (smb0TargetObj.callback != NULL)
                         {
@@ -326,8 +326,6 @@ void __attribute__((used)) I2CSMB0_TargetInterruptHandler(uint32_t completion_re
                         {
                             smb0TargetObj.error |= I2C_SMB_TARGET_ERROR_PEC;
                         }
-                        /* Discard the PEC byte sent by master (last byte) */
-                        smb0TargetObj.rxCount -= 1U;
                     }
 
                     if (smb0TargetObj.callback != NULL)
