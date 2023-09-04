@@ -130,7 +130,7 @@ bool QMSPI0_SPI_IsBusy (void)
 
 bool QMSPI0_SPI_IsTransmitterBusy(void)
 {
-    return ((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_TRANS_ACTIV_Msk) != 0);
+    return ((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_TRANS_ACTIV_Msk) != 0U);
 }
 
 
@@ -138,6 +138,8 @@ bool QMSPI0_SPI_IsTransmitterBusy(void)
 bool QMSPI0_SPI_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveData, size_t rxSize)
 {
     bool isRequestAccepted = false;
+    size_t txCount = 0;
+    size_t dummySize = 0;
 
     /* Verify the request */
     if((qmspi0Obj.transferIsBusy == false) && (((txSize > 0U) && (pTransmitData != NULL)) || ((rxSize > 0U) && (pReceiveData != NULL))))
@@ -165,22 +167,26 @@ bool QMSPI0_SPI_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveDat
         /* Flush out any unread data in SPI DATA Register from the previous transfer */
         QMSPI0_REGS->QMSPI_EXE = QMSPI_EXE_CLR_DAT_BUFF_Msk;
 
-        if(qmspi0Obj.rxSize > qmspi0Obj.txSize)
+        if(rxSize > txSize)
         {
-            qmspi0Obj.dummySize = qmspi0Obj.rxSize - qmspi0Obj.txSize;
+            dummySize = rxSize - txSize;
         }
 
-        while ( ((qmspi0Obj.txCount != qmspi0Obj.txSize) || (qmspi0Obj.dummySize > 0U)) && ((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_TX_BUFF_FULL_Msk) == 0U) )
+        while (((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_TX_BUFF_FULL_Msk) == 0U) && ((txCount != txSize) || (dummySize > 0U)))
         {
-            if (qmspi0Obj.txCount != qmspi0Obj.txSize)
+            if (txCount != txSize)
             {
-                *((uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = qmspi0Obj.pTxBuffer[qmspi0Obj.txCount];
-                qmspi0Obj.txCount++;
+                *((volatile uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = qmspi0Obj.pTxBuffer[txCount];
+                txCount++;
             }
-            else if (qmspi0Obj.dummySize > 0U)
+            else if (dummySize > 0U)
             {
-                *((uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = 0xFFU;
-                qmspi0Obj.dummySize--;
+                *((volatile uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = 0xFFU;
+                dummySize--;
+            }
+            else
+            {
+                /* Do nothing */
             }
         }
 
@@ -188,10 +194,13 @@ bool QMSPI0_SPI_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveDat
 
         QMSPI0_REGS->QMSPI_CTRL = QMSPI_CTRL_TRANS_UNITS(0x01) | QMSPI_CTRL_TRANS_LEN(transferCount) | QMSPI_CTRL_TX_TRANS_EN(0x01) | QMSPI_CTRL_RX_TRANS_EN_Msk;
 
-        if ((qmspi0Obj.txCount == qmspi0Obj.txSize) && (qmspi0Obj.dummySize == 0U))
+        if ((txCount == txSize) && (dummySize == 0U))
         {
             QMSPI0_REGS->QMSPI_CTRL |= QMSPI_CTRL_CLOSE_TRANS_EN_Msk;
         }
+
+        qmspi0Obj.txCount = txCount;
+        qmspi0Obj.dummySize = dummySize;
 
         QMSPI0_REGS->QMSPI_IEN = QMSPI_IEN_TRANS_COMPL_EN_Msk;
         QMSPI0_REGS->QMSPI_EXE = QMSPI_EXE_START_Msk;
@@ -205,8 +214,13 @@ bool QMSPI0_SPI_WriteRead (void* pTransmitData, size_t txSize, void* pReceiveDat
 void __attribute__((used)) QMSPI0_InterruptHandler(void)
 {
     volatile uint8_t receivedData;
+    uint32_t rxSize = qmspi0Obj.rxSize;
+    uint32_t rxCount = qmspi0Obj.rxCount;
+    uint32_t txSize = qmspi0Obj.txSize;
+    uint32_t txCount = qmspi0Obj.txCount;
+    uint32_t dummySize = qmspi0Obj.dummySize;
 
-    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_QMSPI0))
+    if (ECIA_GIRQResultGet(ECIA_DIR_INT_SRC_QMSPI0) != 0U)
     {
         ECIA_GIRQSourceClear(ECIA_DIR_INT_SRC_QMSPI0);
 
@@ -217,15 +231,17 @@ void __attribute__((used)) QMSPI0_InterruptHandler(void)
             /* Read the received data from the FIFO */
             while ((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_RX_BUFF_EMP_Msk) == 0U)
             {
-                receivedData = *((uint8_t*)&QMSPI0_REGS->QMSPI_RX_FIFO[0]);
-                if(qmspi0Obj.rxCount < qmspi0Obj.rxSize)
+                receivedData = *((volatile uint8_t*)&QMSPI0_REGS->QMSPI_RX_FIFO[0]);
+                if(rxCount < rxSize)
                 {
-                    qmspi0Obj.pRxBuffer[qmspi0Obj.rxCount] = (uint8_t)receivedData;
-                    qmspi0Obj.rxCount++;
+                    qmspi0Obj.pRxBuffer[rxCount] = (uint8_t)receivedData;
+                    rxCount++;
                 }
             }
 
-            if ((qmspi0Obj.txCount == qmspi0Obj.txSize) && (qmspi0Obj.rxCount == qmspi0Obj.rxSize))
+            qmspi0Obj.rxCount = rxCount;
+
+            if ((txCount == txSize) && (rxCount == rxSize))
             {
                 QMSPI0_REGS->QMSPI_IEN &= ~QMSPI_IEN_TRANS_COMPL_EN_Msk;
 
@@ -240,25 +256,32 @@ void __attribute__((used)) QMSPI0_InterruptHandler(void)
             }
             else
             {
-                while ( ((qmspi0Obj.txCount != qmspi0Obj.txSize) || (qmspi0Obj.dummySize > 0U)) && ((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_TX_BUFF_FULL_Msk) == 0U) )
+                while ( ((QMSPI0_REGS->QMSPI_STS & QMSPI_STS_TX_BUFF_FULL_Msk) == 0U) && ((txCount != txSize) || (dummySize > 0U)) )
                 {
-                    if (qmspi0Obj.txCount != qmspi0Obj.txSize)
+                    if (txCount != txSize)
                     {
-                        *((uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = qmspi0Obj.pTxBuffer[qmspi0Obj.txCount];
-                        qmspi0Obj.txCount++;
+                        *((volatile uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = qmspi0Obj.pTxBuffer[txCount];
+                        txCount++;
                     }
-                    else if (qmspi0Obj.dummySize > 0U)
+                    else if (dummySize > 0U)
                     {
-                        *((uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = 0xFFU;
-                        qmspi0Obj.dummySize--;
+                        *((volatile uint8_t*)&QMSPI0_REGS->QMSPI_TX_FIFO[0]) = 0xFFU;
+                        dummySize--;
+                    }
+                    else
+                    {
+                        /* Do nothing */
                     }
                 }
+
+                qmspi0Obj.txCount = txCount;
+                qmspi0Obj.dummySize = dummySize;
 
                 uint32_t transferCount = QMSPI0_REGS->QMSPI_BUF_CNT_STS & QMSPI_BUF_CNT_STS_TX_BUFF_CNT_Msk;
 
                 QMSPI0_REGS->QMSPI_CTRL = QMSPI_CTRL_TRANS_UNITS(0x01) | QMSPI_CTRL_TRANS_LEN(transferCount) | QMSPI_CTRL_TX_TRANS_EN(0x01) | QMSPI_CTRL_RX_TRANS_EN_Msk;
 
-                if ((qmspi0Obj.txCount == qmspi0Obj.txSize) && (qmspi0Obj.dummySize == 0U))
+                if ((txCount == txSize) && (dummySize == 0U))
                 {
                     QMSPI0_REGS->QMSPI_CTRL |= QMSPI_CTRL_CLOSE_TRANS_EN_Msk;
                 }

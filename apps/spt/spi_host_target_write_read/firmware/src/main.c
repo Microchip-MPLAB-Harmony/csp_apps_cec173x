@@ -67,16 +67,16 @@ const char* cmpTxStr1 = "tseT";
 const char* cmpTxStr2 = "phcm";
 
 /* Global variables */
-uint8_t txBuff[100];
-uint8_t rxBuff[100];
-uint8_t txData[100];
-uint8_t transferLen = 0;
+static uint8_t txBuff[100];
+static uint8_t rxBuff[100];
+static uint8_t txData[100];
+static uint8_t transferLen = 0;
 volatile bool transferStatus = false;
-uint16_t mem_addr = 0x0010;
-uint16_t sreg_addr;
-APP_STATE state = APP_STATE_POSTED_W32;
-APP_STATE nextState;
-bool hostInterruptEn = false;
+static uint16_t mem_addr = 0x0010;
+static uint16_t sreg_addr;
+static APP_STATE state = APP_STATE_POSTED_W32;
+static APP_STATE nextState;
+static bool hostInterruptEn = false;
 // *****************************************************************************
 // *****************************************************************************
 // Section: Main Entry Point

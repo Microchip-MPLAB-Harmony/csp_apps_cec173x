@@ -405,7 +405,7 @@ uint32_t I2CSMB0_HostTransferCountGet(void)
 uint32_t I2CSMB0_HostBufferRead(void* pBuffer)
 {
     uint32_t i;
-    uint32_t numBytesAvailable = DMA_ChannelGetTransferredCount(DMA_CHANNEL_0) - 1;
+    uint32_t numBytesAvailable = DMA_ChannelGetTransferredCount(DMA_CHANNEL_0) - 1U;
 
     /* First byte in i2csmb0HostRdBuffer is always the address byte and hence not copied to application buffer */
     for (i = 0; i < numBytesAvailable; i++)

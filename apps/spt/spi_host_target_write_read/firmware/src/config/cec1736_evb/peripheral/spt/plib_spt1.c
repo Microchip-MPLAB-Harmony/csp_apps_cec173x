@@ -185,7 +185,7 @@ uint32_t SPT1_HostToECMBXRead(void)
 
 void SPT1_HostToECMBXClr(void)
 {
-    SPT1_REGS->SPT_SPIM2EC_MBX = 0xFFFFFFFF;
+    SPT1_REGS->SPT_SPIM2EC_MBX = 0xFFFFFFFFU;
 }
 
 void SPT1_ECToHostMBXWrite(uint32_t val)
